@@ -2,7 +2,8 @@ package com.marllonmendez.voll.modal;
 
 import com.marllonmendez.voll.dto.EnderecoDTO;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Embeddable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

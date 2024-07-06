@@ -15,7 +15,7 @@
 </div>
 
 ## Sobre
-API de uma aplicação de uma clínica médica fictícia desenvolvida para introdução de estudos de migrations.
+API de uma aplicação para uma clínica médica fictícia, desenvolvida para fins educacionais. Esta API abrange conceitos como migrações de banco de dados, tratamento de exceções, autenticação/autorização usando JWT e filtros em requisições.
 
 ## Funcionalidades
 

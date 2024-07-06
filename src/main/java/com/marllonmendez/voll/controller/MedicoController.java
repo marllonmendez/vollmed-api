@@ -1,9 +1,10 @@
 package com.marllonmendez.voll.controller;
 
-import com.marllonmendez.voll.dto.DadosMedicoDTO;
-import com.marllonmendez.voll.dto.AtualizacaoDadosMedicoDTO;
-import com.marllonmendez.voll.dto.MedicoDTO;
 import com.marllonmendez.voll.modal.Medico;
+import com.marllonmendez.voll.dto.MedicoDTO;
+import com.marllonmendez.voll.dto.DadosMedicoDTO;
+import com.marllonmendez.voll.dto.DadosDetalhadosMedicoDTO;
+import com.marllonmendez.voll.dto.AtualizacaoDadosMedicoDTO;
 import com.marllonmendez.voll.repository.IMedicoRepository;
 
 import jakarta.validation.Valid;
@@ -12,9 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("medicos")
@@ -25,28 +27,39 @@ public class MedicoController {
 
     @PostMapping
     @Transactional
-    public void cadastrar(@RequestBody @Valid MedicoDTO medicoDTO) {
-        imedicoRepository.save(new Medico(medicoDTO));
+    public ResponseEntity cadastrar(@RequestBody @Valid MedicoDTO medicoDTO, UriComponentsBuilder uriBuilder) {
+        var medico =  new Medico(medicoDTO);
+        imedicoRepository.save(medico);
+        var uri = uriBuilder.path("medicos/{id}").buildAndExpand(medico.getId()).toUri();
+        return ResponseEntity.created(uri).body(new DadosDetalhadosMedicoDTO(medico));
     }
 
-    //    http://localhost:8080/medicos?sort=cmr,desc&size=2&page=1
     @GetMapping
-    public Page<DadosMedicoDTO> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable pageable) {
-        return imedicoRepository.findAllByDisponivelTrue(pageable).map(DadosMedicoDTO::new);
+    public ResponseEntity<Page<DadosMedicoDTO>> listarMedico(@PageableDefault(size = 10, sort = {"nome"}) Pageable pageable) {
+        var lista = imedicoRepository.findAllByDisponivelTrue(pageable).map(DadosMedicoDTO::new);
+        return ResponseEntity.ok(lista);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity listarMedicoDetalhado(@PathVariable Long id) {
+        var medico = imedicoRepository.getReferenceById(id);
+        return ResponseEntity.ok(new DadosDetalhadosMedicoDTO(medico));
     }
 
     @PutMapping
     @Transactional
-    public void atualizar(@RequestBody @Valid AtualizacaoDadosMedicoDTO atualizacaoDadosMedicoDTO) {
+    public ResponseEntity atualizar(@RequestBody @Valid AtualizacaoDadosMedicoDTO atualizacaoDadosMedicoDTO) {
         var medico = imedicoRepository.getReferenceById(atualizacaoDadosMedicoDTO.Id());
         medico.atualizarMedico(atualizacaoDadosMedicoDTO);
+        return ResponseEntity.ok(new DadosDetalhadosMedicoDTO(medico));
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public void remover(@PathVariable Long id) {
+    public ResponseEntity remover(@PathVariable Long id) {
         var medico = imedicoRepository.getReferenceById(id);
         medico.remover();
+        return ResponseEntity.noContent().build();
     }
 
 }

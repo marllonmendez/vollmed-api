@@ -4,7 +4,15 @@ import com.marllonmendez.voll.dto.AtualizacaoDadosMedicoDTO;
 import com.marllonmendez.voll.dto.MedicoDTO;
 import com.marllonmendez.voll.enums.Ramo;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,7 +26,8 @@ import lombok.NoArgsConstructor;
 @Entity(name = "Medicos")
 public class Medico {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private String email;
