@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.marllonmendez</groupId>
 	<artifactId>voll</artifactId>
-	<version>1.1.0-SNAPSHOT</version>
+	<version>1.2.0-SNAPSHOT</version>
 	<name>voll</name>
 	<description>Spring Boot 3: desenvolva uma API Rest em Java</description>
 	<properties>

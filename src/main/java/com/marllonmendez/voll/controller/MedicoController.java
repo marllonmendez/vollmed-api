@@ -1,22 +1,22 @@
 package com.marllonmendez.voll.controller;
 
-import com.marllonmendez.voll.modal.Medico;
-import com.marllonmendez.voll.dto.MedicoDTO;
-import com.marllonmendez.voll.dto.DadosMedicoDTO;
-import com.marllonmendez.voll.dto.DadosDetalhadosMedicoDTO;
-import com.marllonmendez.voll.dto.AtualizacaoDadosMedicoDTO;
-import com.marllonmendez.voll.repository.IMedicoRepository;
+import com.marllonmendez.voll.domain.Medico.entity.Medico;
+import com.marllonmendez.voll.domain.Medico.dto.MedicoDTO;
+import com.marllonmendez.voll.domain.Medico.dto.DadosMedicoDTO;
+import com.marllonmendez.voll.domain.Medico.dto.DadosDetalhadosMedicoDTO;
+import com.marllonmendez.voll.domain.Medico.dto.AtualizacaoDadosMedicoDTO;
+import com.marllonmendez.voll.domain.Medico.repository.IMedicoRepository;
 
-import jakarta.validation.Valid;
-
+import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("medicos")
@@ -27,7 +27,7 @@ public class MedicoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid MedicoDTO medicoDTO, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity cadastrarMedico(@RequestBody @Valid MedicoDTO medicoDTO, UriComponentsBuilder uriBuilder) {
         var medico =  new Medico(medicoDTO);
         imedicoRepository.save(medico);
         var uri = uriBuilder.path("medicos/{id}").buildAndExpand(medico.getId()).toUri();
@@ -35,7 +35,7 @@ public class MedicoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DadosMedicoDTO>> listarMedico(@PageableDefault(size = 10, sort = {"nome"}) Pageable pageable) {
+    public ResponseEntity<Page<DadosMedicoDTO>> listarMedicos(@PageableDefault(size = 10, sort = {"nome"}) Pageable pageable) {
         var lista = imedicoRepository.findAllByDisponivelTrue(pageable).map(DadosMedicoDTO::new);
         return ResponseEntity.ok(lista);
     }
@@ -48,7 +48,7 @@ public class MedicoController {
 
     @PutMapping
     @Transactional
-    public ResponseEntity atualizar(@RequestBody @Valid AtualizacaoDadosMedicoDTO atualizacaoDadosMedicoDTO) {
+    public ResponseEntity atualizarMedico(@RequestBody @Valid AtualizacaoDadosMedicoDTO atualizacaoDadosMedicoDTO) {
         var medico = imedicoRepository.getReferenceById(atualizacaoDadosMedicoDTO.Id());
         medico.atualizarMedico(atualizacaoDadosMedicoDTO);
         return ResponseEntity.ok(new DadosDetalhadosMedicoDTO(medico));
@@ -56,7 +56,7 @@ public class MedicoController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity remover(@PathVariable Long id) {
+    public ResponseEntity removerMedico(@PathVariable Long id) {
         var medico = imedicoRepository.getReferenceById(id);
         medico.remover();
         return ResponseEntity.noContent().build();

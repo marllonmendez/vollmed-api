@@ -1,7 +1,7 @@
 package com.marllonmendez.voll.infra.security;
 
-import com.marllonmendez.voll.repository.IUsuarioRepository;
-import com.marllonmendez.voll.service.Token;
+import com.marllonmendez.voll.domain.Usuario.repository.IUsuarioRepository;
+import com.marllonmendez.voll.domain.Usuario.service.Token;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

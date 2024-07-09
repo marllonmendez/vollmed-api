@@ -1,10 +1,9 @@
 package com.marllonmendez.voll.infra.exception;
 
-import com.marllonmendez.voll.dto.DadosErroValidacaoDTO;
-
 import jakarta.persistence.EntityNotFoundException;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -22,7 +21,19 @@ public class ErrosException {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity error400(MethodArgumentNotValidException exception) {
         var errors = exception.getBindingResult().getFieldErrors();
-        return ResponseEntity.badRequest().body(errors.stream().map(DadosErroValidacaoDTO::new).toList());
+        return ResponseEntity.badRequest().body(errors.stream().map(DadosErroValidacao::new).toList());
+    }
+
+    // Mostra ao cliente erro das validações
+    @ExceptionHandler(ValidException.class)
+    public ResponseEntity errorBusines(ValidException exception) {
+        return ResponseEntity.badRequest().body(exception.getMessage());
+    }
+
+    public record DadosErroValidacao(String campo, String mensagem) {
+        public DadosErroValidacao(FieldError fieldError) {
+            this(fieldError.getField(), fieldError.getDefaultMessage());
+        }
     }
 
 }
