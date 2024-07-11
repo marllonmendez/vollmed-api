@@ -32,8 +32,8 @@ public class MedicoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrarMedico(@RequestBody @Valid MedicoDTO medicoDTO, UriComponentsBuilder uriBuilder) {
-        var medico =  new Medico(medicoDTO);
+    public ResponseEntity cadastrarMedico(@RequestBody @Valid MedicoDTO dto, UriComponentsBuilder uriBuilder) {
+        var medico =  new Medico(dto);
         imedicoRepository.save(medico);
         var uri = uriBuilder.path("medicos/{id}").buildAndExpand(medico.getId()).toUri();
         return ResponseEntity.created(uri).body(new DetalhadosMedicoDTO(medico));
@@ -53,9 +53,9 @@ public class MedicoController {
 
     @PutMapping
     @Transactional
-    public ResponseEntity atualizarMedico(@RequestBody @Valid AtualizacaoDadosMedicoDTO atualizacaoDadosMedicoDTO) {
-        var medico = imedicoRepository.getReferenceById(atualizacaoDadosMedicoDTO.Id());
-        medico.atualizarMedico(atualizacaoDadosMedicoDTO);
+    public ResponseEntity atualizarMedico(@RequestBody @Valid AtualizacaoDadosMedicoDTO dto) {
+        var medico = imedicoRepository.getReferenceById(dto.Id());
+        medico.atualizarMedico(dto);
         return ResponseEntity.ok(new DetalhadosMedicoDTO(medico));
     }
 

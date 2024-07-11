@@ -1,6 +1,5 @@
 package com.marllonmendez.vollmed.infra.swagger;
 
-import io.swagger.v3.oas.annotations.servers.Servers;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;

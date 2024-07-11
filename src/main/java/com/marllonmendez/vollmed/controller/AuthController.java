@@ -1,7 +1,6 @@
 package com.marllonmendez.vollmed.controller;
 
-import com.marllonmendez.vollmed.domain.Usuario.dto.DadosAuthDTO;
-
+import com.marllonmendez.vollmed.domain.Usuario.dto.AuthDTO;
 import com.marllonmendez.vollmed.domain.Usuario.entity.Usuario;
 import com.marllonmendez.vollmed.domain.Usuario.service.Token;
 
@@ -30,8 +29,8 @@ public class AuthController {
     private Token tokenService;
 
     @PostMapping
-    public ResponseEntity efetuarLogin(@RequestBody @Valid DadosAuthDTO authDTO) {
-        var token = new UsernamePasswordAuthenticationToken(authDTO.login(), authDTO.senha());
+    public ResponseEntity efetuarLogin(@RequestBody @Valid AuthDTO dto) {
+        var token = new UsernamePasswordAuthenticationToken(dto.login(), dto.senha());
         var auth = authenticationManager.authenticate(token);
         return ResponseEntity.ok(tokenService.gerarToken((Usuario) auth.getPrincipal()));
     }

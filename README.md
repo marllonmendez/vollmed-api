@@ -11,11 +11,12 @@
 [![Hibernate](https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=white)](https://hibernate.org/)
 [![Maven](https://img.shields.io/badge/Apache_Maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white)](https://maven.apache.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white)](https://swagger.io/)
 
 </div>
 
 ## Sobre
-A Vollmed API é um API REST para uma clínica médica fictícia, desenvolvida para fins educacionais. Este projeto abrange conceitos como migrações de banco de dados, tratamento de exceções, autenticação usando JWT, filtros em requisições, validações personalizadas e documentação do Swagger.
+A Vollmed é um API REST para uma clínica médica fictícia, desenvolvida para fins educacionais. Este projeto abrange conceitos como migrações de banco de dados, tratamento de exceções, autenticação usando JWT, filtros em requisições, validações personalizadas e documentação com Swagger.
 
 [![Documentação](./src/assets/swagger.png)]()
 
@@ -46,6 +47,12 @@ A Vollmed API é um API REST para uma clínica médica fictícia, desenvolvida p
 - Agendamento de consultas.
 - Listagem de todas as consultas disponíveis.
 - Cancelamento de consultas.
+
+### URL da Documentação
+
+``` bash
+http://localhost:8080/swagger-ui/index.html
+```
 
 ## Licença
 
