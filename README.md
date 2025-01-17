@@ -18,7 +18,9 @@
 ## Sobre
 A Vollmed é um API REST para uma clínica médica fictícia, desenvolvida para fins educacionais. Este projeto abrange conceitos como migrações de banco de dados, tratamento de exceções, autenticação usando JWT, filtros em requisições, validações personalizadas e documentação com Swagger.
 
-[![Documentação](./src/assets/swagger.png)]()
+<div align="center">
+    <img src="./assets/images/swagger.png" alt="Swagger Documentation" />
+</div>
 
 ## Funcionalidades
 
